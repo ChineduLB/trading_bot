@@ -1,0 +1,8 @@
+# Function dependencies, for example:
+# package>=version
+ccxt
+google-cloud-secret-manager
+Werkzeug==2.2.2
+Flask==2.0.2
+gunicorn==20.1.0
+sendgrid
