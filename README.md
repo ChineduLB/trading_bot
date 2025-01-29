@@ -1,2 +1,2 @@
 # trading_bot
-Using Trading view alerts to place orders on exchanges
+Google Cloud Based Bot Using Trading view alerts to place orders on Kucoin and Coinbase exchanges
