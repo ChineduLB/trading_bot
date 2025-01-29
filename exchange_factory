@@ -1,0 +1,288 @@
+import constants
+import secrets_manager
+import ccxt
+
+api_secrets = secrets_manager.get_coinbase_secrets()
+KUCOIN_EXCHANGE = None
+COINBASE_EXCHANGE = None
+KUCOIN_LbCrypto3000 = None
+KUCOIN_LbCrypto2000 = None
+KUCOIN_LbCrypto4000 = None
+KuCoin_LbCrypto5000KC = None
+KuCoin_LbCrypto7000KC = None
+KuCoin_LbCrypto8000 = None
+KuCoin_LbCrypto1000 = None
+KuCoin_LbCrypto9000KC = None
+LbCrypto1000Cb = None
+LbCrypto2000Cb = None
+LbCrypto4000Cb = None
+LbCrypto5000Cb = None
+LbCrypto7000Cb = None
+LbCrypto8000Cb = None
+LbCrypto9000Cb = None
+LbCrypto1100Cb = None
+LbCrypto1200Cb = None
+
+
+def kucoin_exchange():
+    global KUCOIN_EXCHANGE
+    if(KUCOIN_EXCHANGE is None):
+        KUCOIN_EXCHANGE = ccxt.kucoin({
+            "apiKey": api_secrets.KuCoinApiKey,
+            "secret": api_secrets.KuCoinSecret,
+            "password": api_secrets.KuCoinPassphrase,
+            "enableRateLimit": True
+        })
+    return KUCOIN_EXCHANGE
+
+def kucoin_LbCrypto3000Api():
+    global KUCOIN_LbCrypto3000
+    if(KUCOIN_LbCrypto3000 is None):
+        KUCOIN_LbCrypto3000 = ccxt.kucoin({
+            "apiKey": api_secrets.KuCoinLbCrypto3000ApiKey,
+            "secret": api_secrets.KuCoinLbCrypto3000ApiSecret,
+            "password": api_secrets.KuCoinSubAcctsPwd,
+            "enableRateLimit": True
+        })
+    return KUCOIN_LbCrypto3000
+
+
+
+def kucoin_LbCrypto2000Api():
+    global KUCOIN_LbCrypto2000
+    if(KUCOIN_LbCrypto2000 is None):
+        KUCOIN_LbCrypto2000 = ccxt.kucoin({
+            "apiKey": api_secrets.KuCoinLbCrypto2000ApiKey,
+            "secret": api_secrets.KuCoinLbCrypto2000ApiSecret,
+            "password": api_secrets.KuCoinSubAcctsPwd,
+            "enableRateLimit": True
+        })
+    return KUCOIN_LbCrypto2000
+
+
+def kucoin_LbCrypto4000Api():
+    global KUCOIN_LbCrypto4000
+    if(KUCOIN_LbCrypto4000 is None):
+        KUCOIN_LbCrypto4000 = ccxt.kucoin({
+            "apiKey": api_secrets.KuCoinLbCrypto4000ApiKey,
+            "secret": api_secrets.KuCoinLbCrypto4000ApiSecret,
+            "password": api_secrets.KuCoinSubAcctsPwd,
+            "enableRateLimit": True
+        })
+    return KUCOIN_LbCrypto4000
+
+
+def kucoin_LbCrypto8000Api():
+    global KuCoin_LbCrypto8000
+    if(KuCoin_LbCrypto8000 is None):
+        KuCoin_LbCrypto8000 = ccxt.kucoin({
+            "apiKey": api_secrets.KuCoinLbCrypto8000ApiKey,
+            "secret": api_secrets.KuCoinLbCrypto8000ApiSecret,
+            "password": api_secrets.KuCoinSubAcctsPwd,
+            "enableRateLimit": True
+        })
+    return KuCoin_LbCrypto8000
+
+def kucoin_LbCrypto7000KCApi():
+    global KuCoin_LbCrypto7000KC
+    if(KuCoin_LbCrypto7000KC is None):
+        KuCoin_LbCrypto7000KC = ccxt.kucoin({
+            "apiKey": api_secrets.KuCoinLbCrypto7000ApiKey,
+            "secret": api_secrets.KuCoinLbCrypto7000ApiSecret,
+            "password": api_secrets.KuCoinSubAcctsPwd,
+            "enableRateLimit": True
+        })
+    return KuCoin_LbCrypto7000KC
+
+
+def kucoin_LbCrypto5000KCApi():
+    global KuCoin_LbCrypto5000KC
+    if(KuCoin_LbCrypto5000KC is None):
+        KuCoin_LbCrypto5000KC = ccxt.kucoin({
+            "apiKey": api_secrets.KuCoinLbCrypto5000ApiKey,
+            "secret": api_secrets.KuCoinLbCrypto5000ApiSecret,
+            "password": api_secrets.KuCoinSubAcctsPwd,
+            "enableRateLimit": True
+        })
+    return KuCoin_LbCrypto5000KC
+
+
+def KuCoin_LbCrypto1000ApiKC():
+    global KuCoin_LbCrypto1000
+    if KuCoin_LbCrypto1000 is None:
+        KuCoin_LbCrypto1000 = ccxt.kucoin({
+            "apiKey": api_secrets.KuCoinLbCrypto1000ApiKey,
+            "secret": api_secrets.KuCoinLbCrypto1000ApiSecret,
+            "password": api_secrets.KuCoinSubAcctsPwd,
+            "enableRateLimit": True
+        })
+    return KuCoin_LbCrypto1000
+
+def kucoin_LbCrypto9000KCApi():
+    global KuCoin_LbCrypto9000KC
+    if KuCoin_LbCrypto9000KC is None:
+        KuCoin_LbCrypto9000KC = ccxt.kucoin({
+            "apiKey": api_secrets.LbCrypto9000KCApiKey,
+            "secret": api_secrets.LbCrypto9000KCApiSecret,
+            "password": api_secrets.KuCoinSubAcctsPwd,
+            "enableRateLimit": True
+        })
+    return KuCoin_LbCrypto9000KC
+
+
+def coinbase_exchange():
+    global COINBASE_EXCHANGE
+    if COINBASE_EXCHANGE is None:
+        COINBASE_EXCHANGE = ccxt.coinbasepro({
+            "apiKey": api_secrets.CoinbaseApiKey,
+            "secret": api_secrets.CoinbaseSecret,
+            "password": api_secrets.CoinbasePassphrase,
+            "enableRateLimit": True
+        })
+    return COINBASE_EXCHANGE
+
+def LbCrypto2000Cb_Exchange():
+    # ATOM PORTFOLIO
+    global LbCrypto2000Cb
+    if LbCrypto2000Cb is None:
+        LbCrypto2000Cb = ccxt.coinbasepro({
+            "apiKey": api_secrets.CoinbaseLbCrypto2000ApiKey,
+            "secret": api_secrets.CoinbaseLbCrypto2000ApiSecret,
+            "password": api_secrets.CoinbasePortfolioPassPhrase,
+            "enableRateLimit": True
+        })
+    return LbCrypto2000Cb
+
+
+def LbCrypto1000Cb_Exchange():
+    # ATOM PORTFOLIO
+    global LbCrypto1000Cb
+    if LbCrypto1000Cb is None:
+        LbCrypto1000Cb = ccxt.coinbasepro({
+            "apiKey": api_secrets.CoinbaseLbCrypto1000ApiKey,
+            "secret": api_secrets.CoinbaseLbCrypto1000ApiSecret,
+            "password": 'Chinonye@2000',
+            "enableRateLimit": True
+        })
+    return LbCrypto1000Cb
+
+def LbCrypto4000Cb_Exchange():
+    # ATOM PORTFOLIO
+    global LbCrypto4000Cb
+    if LbCrypto4000Cb is None:
+        LbCrypto4000Cb = ccxt.coinbasepro({
+            "apiKey": api_secrets.CoinbaseLbCrypto4000ApiKey,
+            "secret": api_secrets.CoinbaseLbCrypto4000ApiSecret,
+            "password": api_secrets.CoinbasePortfolioPassPhrase,
+            "enableRateLimit": True
+        })
+    return LbCrypto4000Cb
+
+def LbCrypto5000Cb_Exchange():
+    global LbCrypto5000Cb
+    if LbCrypto5000Cb is None:
+        LbCrypto5000Cb = ccxt.coinbasepro({
+            "apiKey": api_secrets.LbCrypto5000CbApiKey,
+            "secret": api_secrets.LbCrypto5000CbApiSecret,
+            "password": api_secrets.CoinbasePortfolioPassPhrase,
+            "enableRateLimit": True
+        })
+    return LbCrypto5000Cb
+
+def LbCrypto7000Cb_Exchange():
+    global LbCrypto7000Cb
+    if LbCrypto7000Cb is None:
+        LbCrypto7000Cb = ccxt.coinbasepro({
+            "apiKey": api_secrets.LbCrypto7000CbApiKey,
+            "secret": api_secrets.LbCrypto7000CbApiSecret,
+            "password": api_secrets.CoinbasePortfolioPassPhrase,
+            "enableRateLimit": True
+        })
+    return LbCrypto7000Cb
+
+def LbCrypto8000Cb_Exchange():
+    global LbCrypto8000Cb
+    if LbCrypto8000Cb is None:
+        LbCrypto8000Cb = ccxt.coinbasepro({
+            "apiKey": api_secrets.LbCrypto8000CbApiKey,
+            "secret": api_secrets.LbCrypto8000CbApiSecret,
+            "password": api_secrets.CoinbasePortfolioPassPhrase,
+            "enableRateLimit": True
+        })
+    return LbCrypto8000Cb
+
+
+def LbCrypto9000Cb_Exchange():
+    global LbCrypto9000Cb
+    if LbCrypto9000Cb is None:
+        LbCrypto9000Cb = ccxt.coinbasepro({
+            "apiKey": api_secrets.LbCrypto9000CbApiKey,
+            "secret": api_secrets.LbCrypto9000CbApiSecret,
+            "password": api_secrets.CoinbasePortfolioPassPhrase,
+            "enableRateLimit": True
+        })
+    return LbCrypto9000Cb
+
+def LbCrypto11000Cb_Exchange():
+    global LbCrypto1100Cb
+    if LbCrypto1100Cb is None:
+        LbCrypto1100Cb = ccxt.coinbasepro({
+            "apiKey": api_secrets.LbCrypto1100CbApiKey,
+            "secret": api_secrets.LbCrypto1100CbApiSecret,
+            "password": api_secrets.CoinbasePortfolioPassPhrase,
+            "enableRateLimit": True
+        })
+    return LbCrypto1100Cb
+
+def LbCrypto1200Cb_Exchange():
+    global LbCrypto1200Cb
+    if LbCrypto1200Cb is None:
+        LbCrypto1200Cb = ccxt.coinbasepro({
+            "apiKey": api_secrets.LbCrypto1200CbApiKey,
+            "secret": api_secrets.LbCrypto1200CbApiSecret,
+            "password": api_secrets.CoinbasePortfolioPassPhrase,
+            "enableRateLimit": True
+        })
+    return LbCrypto1200Cb
+
+
+exchange_api = {
+    constants.KUCOIN : kucoin_exchange(),
+    constants.COINBASE: coinbase_exchange(),
+    constants.LbCrypto2000Cb: LbCrypto2000Cb_Exchange(),
+    constants.LbCrypto1000Cb: LbCrypto1000Cb_Exchange(),
+    constants.LbCrypto4000Cb: LbCrypto4000Cb_Exchange(),
+    constants.KUCOIN_LbCrypto2000: kucoin_LbCrypto2000Api(),
+    constants.KuCoin_LbCrypto1000: KuCoin_LbCrypto1000ApiKC(),
+    constants.KUCOIN_LbCrypto3000 : kucoin_LbCrypto3000Api(),
+    constants.KUCOIN_LbCrypto4000 : kucoin_LbCrypto4000Api(),
+    constants.KuCoin_LbCrypto5000KC : kucoin_LbCrypto5000KCApi(),
+    constants.KuCoin_LbCrypto7000KC : kucoin_LbCrypto7000KCApi(),
+    constants.KuCoin_LbCrypto8000 : kucoin_LbCrypto8000Api(),
+    constants.KuCoin_LbCrypto9000KC: kucoin_LbCrypto9000KCApi(),
+    constants.LbCrypto5000Cb : LbCrypto5000Cb_Exchange(),
+    constants.LbCrypto7000Cb : LbCrypto7000Cb_Exchange(),
+    constants.LbCrypto8000Cb : LbCrypto8000Cb_Exchange(),
+    constants.LbCrypto9000Cb : LbCrypto9000Cb_Exchange(),
+    constants.LbCrypto1100Cb : LbCrypto11000Cb_Exchange(),
+    constants.LbCrypto1200Cb : LbCrypto1200Cb_Exchange()
+}
+
+def get_exchange(name):
+    exchange = exchange_api.get(name, None)
+    if exchange is None   :
+        raise Exception("Unknown Exchange Name == {0}".format(name))
+
+    exchange.load_markets()
+    exchange.verbose = True
+
+    return exchange
+
+
+if __name__ == "__main__":
+    for name in [constants.KuCoin_LbCrypto9000KC]: #[constants.KuCoin_LbCrypto5000KC, constants.KuCoin_LbCrypto7000KC, constants.KuCoin_LbCrypto8000]:
+        exc = get_exchange(name)
+        print(exc.name)
+
+    # exc = KuCoin_LbCrypto1000ApiKC()
+    # print(exc)
