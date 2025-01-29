@@ -1,0 +1,30 @@
+# Ticker format from TradingView(ADAUSD) different from Ticker Format in CoinBase(ADA/USD)
+
+ticker_map = {
+        'ADAUSD': 'ADA/USD',
+        'DOGEUSD': 'DOGE/USD',
+        'MATICUSD': 'MATIC/USD',
+        'MATICUSDT': 'MATIC/USDT',
+        'SOLUSD': 'SOL/USD',
+        'ONEUSDT': 'ONE/USDT',
+        'ETHUSD': 'ETH/USD',
+        'DOTUSD': 'DOT/USD',
+        'SOLUSDT': 'SOL/USDT',
+        'ATOMUSD': 'ATOM/USD',
+        'LINKUSD': 'LINK/USD',
+        'ICPUSD': 'ICP/USD',
+        'AVAXUSD': 'AVAX/USD',
+        'MANAUSD': 'MANA/USD',
+        'ALGOUSDT': 'ALGO/USDT',
+        'BTCUSDT': 'BTC/USDT',
+        'SHIBUSD': 'SHIB/USD',
+        'ETHUSDT':'ETH/USDT',
+        'DOGEUSDT':'DOGE/USDT',
+        'BATUSDT': 'BAT/USDT',
+        'KCSUSDT': 'KCS/USDT',
+        'ALGOUSD': 'ALGO/USD',
+        'SHIBUSDT': 'SHIB/USDT'
+    }
+
+def getCoinbaseTickerFormat(ticker):
+    return ticker_map[ticker]
