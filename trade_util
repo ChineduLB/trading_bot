@@ -1,0 +1,145 @@
+import constants
+import exchange_factory
+
+
+def get_ticker_symbol(ticker):
+    # recieves ticker in form 'ATOM/USD' returns 'ATOM'
+    return ticker.split('/')[0]
+
+def fetch_avail_bal(ticker, exch_name):
+    exchange = exchange_factory.get_exchange(exch_name)
+    balance = exchange.fetch_balance()
+    symbol = get_ticker_symbol(ticker)
+
+    if exch_name in constants.KuCoin_ACCOUNTS:
+        cash_bal = float(balance['USDT']['free'])
+        cash_total = float(balance['USDT']['total'])
+        ticker_balance, ticker_total = get_ticker_balances(balance, symbol)
+        print("ticker_-{0} Balance ==> {1}, Ticker Total ==> {2} Cash ==> {3}, Cash Total ==> {4}".
+              format(ticker, ticker_balance, ticker_total, cash_bal, cash_total))
+    else:
+        cash_bal = float(balance['USD']['free'])
+        cash_total = float(balance['USD']['total'])
+        ticker_balance, ticker_total = get_ticker_balances(balance, symbol)
+        print("ticker_-{0} Balance ==> {1}, Ticker Total ==> {2} Cash ==> {3}, Cash Total ==> {4}".
+              format(ticker, ticker_balance, ticker_total, cash_bal, cash_total))
+
+    return_dict =  {   'cash_bal': cash_bal,
+                       'cash_total': cash_total,
+                       'ticker_balance': ticker_balance,
+                       'ticker_total':  ticker_total
+                    }
+    return return_dict
+
+def get_ticker_balances(balance, symbol):
+    # Helper for new on-board. Ticker will not be in exchange list
+    if symbol in balance:
+        return (float(balance[symbol]['used']), float(balance[symbol]['total']))
+    return (0.0, 0.0)
+
+def fetch_my_last_trade(ticker, exchange_name):
+    # Fetch last bought asset from exchange
+    print('start fetch_my_trades for {0}'.format(ticker))
+    exchange = exchange_factory.get_exchange(exchange_name)
+    # TODO -- change to return only last buy trade - iterate from last till side='buy'
+    last_trade = exchange.fetch_my_trades(ticker)
+    if last_trade:
+        last_trade = last_trade[-1]
+        last_trade['ticker'] = ticker
+        last_trade['exchange'] = exchange_name
+        # Latest Trade
+        print(last_trade)
+
+        print('fetch_my_trades details for {0} ==> {1}'.format(ticker, last_trade))
+    return last_trade
+
+
+def fetch_open_orders(ticker, exchange_name):
+    # get Exchange
+    open_order = {'has_open_order': False}
+    exchange = exchange_factory.get_exchange(exchange_name)
+    order = exchange.fetch_open_orders(ticker);
+    if (len(order) != 0):
+        order = order[0]
+        order['has_open_order'] = True
+        order['ticker'] = order['symbol']
+        order['exchange'] = exchange_name
+        open_order = order
+
+    return open_order
+
+
+
+def get_amount_to_purchase(avial_bals, buyprice, ticker, exch_name):
+    result_dict = {'amount': 0, 'msg': None}
+    # {cash_bal, cash_total, ticker_balance, ticker_total}
+
+    amount = float(avial_bals['cash_total'] - 10.00) / float(buyprice)
+    if (avial_bals['cash_total'] < 10.00) or (amount <= 0.0):
+        result_dict['msg'] = "Insufficent funds or existing unfilled orders remain for ticker = {0}".format(ticker)
+        print(result_dict['msg'])
+
+    print("Balance for Exchange {0} == [ {1}: {2}, 'USD': {3} ]".
+          format(exch_name, ticker, avial_bals['ticker_total'], avial_bals['cash_total']))
+
+    result_dict['msg'] = 'Completed'
+    result_dict['amount'] = amount
+
+    return result_dict
+
+
+def get_fee(exchange_name, fee_dict):
+    # Coinbase and Kucoin format fee differently - get actual fee from order_detail fee dictionary
+    # convoluted...ccxt returns different format for limit and market orders for Kucoin and coinbase
+    try:
+        fee = 0.0
+        if (exchange_name in constants.KuCoin_ACCOUNTS):
+            fee = get_KuCoin_Fee(fee_dict)
+        else:
+            fee = get_KuCoin_Fee(fee_dict)
+        return fee
+    except Exception as ex:
+        print("Fee could not be determined. supplied fee object is empty - returned 0.0")
+    finally:
+        return fee
+
+
+def get_KuCoin_Fee(fee_dict):
+    if ('fee' in fee_dict):
+        fee = fee_dict.get('fee', 0.0)
+    else:
+        fee = fee_dict.get('cost', 0.0)
+    return fee
+
+
+def get_Coinbase_Fee(fee_dict):
+    if ('fee' in fee_dict):
+        fee = fee_dict['fee']['cost']
+    else:
+        fee = fee_dict.get('cost', 0.0)
+    return fee
+
+
+def get_trade_date(date_time):
+    try:
+        datetime = '2022-01-11 11:11:11.111'
+        # exchange dates are not in sql timestamp format
+        trdate = date_time.replace('T', ' ')
+        datetime = trdate.rstrip(trdate[-1])
+        return datetime
+    except Exception as ex:
+        print("Date Conversion Failed in get_trade_date() returned deault date")
+    finally:
+        return datetime
+
+def get_bias(data):
+    # Add functionality to use MACD sell and buy strategy alerts
+    if data['ticker'] == "SHIB/USDT":
+        if(data[constants.DESCRIPTION] == 'SHIB MACD BUY') and data['bias'].upper() == constants.BUY:
+            return constants.BUY
+        elif (data[constants.DESCRIPTION] == 'SHIB MACD SELL'  and data['bias'].upper() == constants.SELL):
+            return constants.SELL
+        else:
+            return constants.IGNORE
+    else:
+        return data['bias'].upper()
